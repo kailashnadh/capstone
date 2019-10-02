@@ -7,6 +7,7 @@ import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 
 public interface EmployeeDAO {
+	//code by surendher
 	public List<Employee> findAll();
 	
 	public Employee findById(Long id);
