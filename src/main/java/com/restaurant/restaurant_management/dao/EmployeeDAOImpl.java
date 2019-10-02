@@ -94,5 +94,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			}	
 		return roles;
 	}
+	
+	@Override
+	public Employee getMangerFromEmployeeId(Long id) {
+		Query theQuery = entityManager.createQuery(
+				"select m from Employee e join e.manager m where  e.emp_id=:empID");
+		theQuery.setParameter("empID", id);
+		Employee theEmployee =(Employee)theQuery.getSingleResult();
+		return theEmployee;
+	}
 
 }

@@ -51,7 +51,13 @@ private BCryptPasswordEncoder bcryptEncoder;
 
 		return employeeService.findById(employeeId);
 	}
+    
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
+ 	@GetMapping("/manager/{employeeId}")
+ 	public Employee getManagerbyEmployeeId(@PathVariable("employeeId") long employeeId) {
 
+ 		return employeeService.getMangerFromEmployeeId(employeeId);
+ 	}
 	@PutMapping("/update")
 	public Employee updateEmployee(@RequestBody Employee employee) {
 		employee.setPassword(bcryptEncoder.encode(employee.getPassword()));

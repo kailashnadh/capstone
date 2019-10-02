@@ -63,7 +63,12 @@ Employee theEmployee = employeeDAO.findById(id);
 		employeeDAO.deleteById(id);
 		
 	}
-
+	
+	@Override
+	public Employee getMangerFromEmployeeId(Long id) {
+		return employeeDAO.getMangerFromEmployeeId(id);
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String emailId) throws UsernameNotFoundException {
 		Employee emp = employeeDAO.findByEmailId(emailId);
