@@ -12,7 +12,7 @@ import com.restaurant.restaurant_management.model.Messages;
 @Service
 public class MessageServiceImpl implements MessageService {
 private MessageDAO messageDAO;
-@Autowired(required=true)
+@Autowired(required=true) 
 public MessageServiceImpl(MessageDAO theMessageDAO) {
 	messageDAO = theMessageDAO;
 }
