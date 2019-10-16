@@ -57,6 +57,7 @@ public class Employee {
 	private String email;
 	@NotNull
 	private int phonenumber;
+	//added lob
 	@Lob
 	private byte[] photo;
 	
