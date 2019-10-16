@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurant.restaurant_management.model.Messages;
 import com.restaurant.restaurant_management.service.MessageService;
-
+//code by vidya
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
