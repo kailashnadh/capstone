@@ -35,6 +35,7 @@ import lombok.ToString;
 @Table(name="employee")
 @Entity
 public class Employee {
+	//commented by charan
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
