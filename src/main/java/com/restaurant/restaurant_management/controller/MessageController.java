@@ -21,11 +21,14 @@ private MessageService messageService;
 public MessageController(MessageService messageService) {
 	this.messageService = messageService;
 }
+
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
 @GetMapping("/all")
 public Iterable<Messages> allEmployees() {
 	return messageService.getAllMessages();
 }
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
 @PostMapping("/add")
 public Messages addMessage(@RequestBody Messages message) {	
 	messageService.save(message);

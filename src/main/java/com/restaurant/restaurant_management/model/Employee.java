@@ -1,5 +1,6 @@
 package com.restaurant.restaurant_management.model;
 import java.sql.Date;
+import java.util.Base64;
 import java.util.Set;
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -20,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.restaurant.restaurant_management.dto.Employeedto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -54,7 +57,7 @@ public class Employee {
 	private String email;
 	@NotNull
 	private int phonenumber;
-	
+	@Lob
 	private byte[] photo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -143,6 +146,25 @@ public class Employee {
 	public void setRoles(Set<Roles> roles) {
 		this.roles = roles;
 	}
+	
+	 public Employeedto _toConvertStudentDTO(){
+		 Employeedto dto = new Employeedto();
+		 	dto.setEmp_id(emp_id);
+		 	dto.setFirstname(firstname);
+		 	dto.setLastname(lastname);
+		 	dto.setEmail(email);
+		 	dto.setPassword(password);
+		 	dto.setGender(gender);
+		 	dto.setDate(date);
+		 	dto.setPhonenumber(phonenumber);
+		 	dto.setPhoto(Base64.getEncoder().encodeToString(photo));
+		 	dto.setAddress_id(address_id);
+		 	dto.setManager(manager);
+		 	dto.setRoles(roles);
+		 	
+		    //set dto values here from StudentEntity
+		    return dto;
+		 }
 	
 
 }

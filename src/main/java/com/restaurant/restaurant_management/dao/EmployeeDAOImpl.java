@@ -1,5 +1,6 @@
 package com.restaurant.restaurant_management.dao;
 
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,9 +27,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		// create a query
 				Query theQuery = 
 						entityManager.createQuery("from Employee");
+			
 				
 				// execute query and get result list
 				List<Employee> employees = theQuery.getResultList();
+				
+					
+				//String asB64 = Base64.getEncoder().encodeToString("some string".getBytes("utf-8"));
 				
 				// return the results		
 				return employees;

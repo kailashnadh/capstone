@@ -31,6 +31,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	    @Override
 	    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 	        String header = req.getHeader(HEADER_STRING);
+	        res.setHeader("Access-Control-Allow-Origin", "*");
+	        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT");
+	        res.setHeader("Access-Control-Max-Age", "3600");
+	        res.setHeader("Access-Control-Allow-Credentials", "true");
+	        res.setHeader("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+	        res.setHeader("Access-Control-Expose-Headers", "Authorization,CustomHeader2");
+	        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+	        	 System.out.println("in authen jwt");
+	            chain.doFilter(req, res);
+	            return;
+	        }
+	        logger.warn("hehe");
+	        System.out.println("in authen jwt");
 	        String username = null;
 	        String authToken = null;
 	        if (header != null && header.startsWith(TOKEN_PREFIX)) {

@@ -1,6 +1,7 @@
 package com.restaurant.restaurant_management.controller;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.service.EmployeeService;
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,7 +42,14 @@ private BCryptPasswordEncoder bcryptEncoder;
     @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/all")
 	public Iterable<Employee> allEmployees() {
-		return employeeService.findAll();
+    	List<Employee> e=employeeService.findAll();
+//    	List<Employeedto> empdto=new ArrayList<Employeedto>();
+//    	for(Employee emp:e) {
+//    		 
+//    		    Employeedto dto = emp._toConvertEmployeeDTO();
+//    		    empdto.add(dto);
+//    	}
+    	return e;
 	}
 
     //@Secured("ROLE_USER")
@@ -66,7 +75,7 @@ private BCryptPasswordEncoder bcryptEncoder;
 	}
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{messageId}")
-	public void deleteCountry(@PathVariable("employeeId") long employeeId) {
+	public void deleteCountry(@PathVariable("messageId") long employeeId) {
 		employeeService.deleteById(employeeId);
 	}
 }
