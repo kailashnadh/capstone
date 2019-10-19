@@ -1,6 +1,4 @@
 package com.restaurant.restaurant_management.controller;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.restaurant.restaurant_management.dto.Employeedto;
+import com.restaurant.restaurant_management.dto.setRole;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.service.EmployeeService;
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,12 +41,6 @@ private BCryptPasswordEncoder bcryptEncoder;
 	@GetMapping("/all")
 	public Iterable<Employee> allEmployees() {
     	List<Employee> e=employeeService.findAll();
-//    	List<Employeedto> empdto=new ArrayList<Employeedto>();
-//    	for(Employee emp:e) {
-//    		 
-//    		    Employeedto dto = emp._toConvertEmployeeDTO();
-//    		    empdto.add(dto);
-//    	}
     	return e;
 	}
 
@@ -61,7 +53,7 @@ private BCryptPasswordEncoder bcryptEncoder;
 		return employeeService.findById(employeeId);
 	}
     
-    @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
  	@GetMapping("/manager/{employeeId}")
  	public Employee getManagerbyEmployeeId(@PathVariable("employeeId") long employeeId) {
 
@@ -69,7 +61,9 @@ private BCryptPasswordEncoder bcryptEncoder;
  	}
 	@PutMapping("/update")
 	public Employee updateEmployee(@RequestBody Employee employee) {
-		employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+		if(!employee.getPassword().isEmpty()) {
+			employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+		}
 		 employeeService.save(employee);
 		 return employee;
 	}
@@ -77,5 +71,12 @@ private BCryptPasswordEncoder bcryptEncoder;
 	@DeleteMapping("/{messageId}")
 	public void deleteCountry(@PathVariable("messageId") long employeeId) {
 		employeeService.deleteById(employeeId);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/setRole")
+	public void setRolebyId(@RequestBody setRole values) {
+		System.out.println("in controller setroles"+values);
+		 employeeService.setRolebyId(values.getEmp_id(), values.getRole_id());
 	}
 }

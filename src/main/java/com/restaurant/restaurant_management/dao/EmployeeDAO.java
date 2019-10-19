@@ -14,6 +14,7 @@ public interface EmployeeDAO {
 	public Employee findByEmailId(String emailId);
 	
 	public void save(Employee theEmployee);
+	public void setRolebyId(Long emp_id,Long role_id);
 	
 	public void deleteById(Long id);
 	public Set<Roles>getRoles(Long emp_id); 

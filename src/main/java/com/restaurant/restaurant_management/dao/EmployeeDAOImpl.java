@@ -109,4 +109,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return theEmployee;
 	}
 
+	@Override
+	public void setRolebyId(Long emp_id, Long role_id) {
+		System.out.print("employeeid in setrole"+emp_id);
+		System.out.print("roleid in setrole"+role_id);
+		// TODO Auto-generated method stub
+		Query theQuery=entityManager.createNativeQuery(
+				"UPDATE employee_roles SET role_id = ? WHERE employee_roles.emp_id = ?");
+		theQuery.setParameter(1, role_id);
+		theQuery.setParameter(2, emp_id);
+		theQuery.executeUpdate();
+		System.out.println(theQuery);
+	}
+
 }

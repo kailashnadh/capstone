@@ -97,6 +97,13 @@ Employee theEmployee = employeeDAO.findById(id);
 		 return authorities;
 	}
 
+	@Override
+	@Transactional
+	public void setRolebyId(Long emp_id,Long role_id) {
+		employeeDAO.setRolebyId(emp_id,role_id);
+		
+	}
+
 	
 	
 	
