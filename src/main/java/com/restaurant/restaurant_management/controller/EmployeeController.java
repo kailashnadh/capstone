@@ -28,7 +28,7 @@ private BCryptPasswordEncoder bcryptEncoder;
 	public EmployeeController(EmployeeService theEmployeeService) {
 		employeeService = theEmployeeService;
 	}
-
+//Added by Surendher
 	@PostMapping("/add")
 	public Employee addEmployee(@RequestBody Employee employee) {	
 		employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
