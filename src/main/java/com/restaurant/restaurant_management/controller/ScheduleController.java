@@ -6,45 +6,45 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Messages;
+import com.restaurant.restaurant_management.model.Schedule;
 import com.restaurant.restaurant_management.service.MessageService;
-//code by vidya
+import com.restaurant.restaurant_management.service.ScheduleService;
+
 @RestController
-@RequestMapping("/messages")
-public class MessageController {
-private MessageService messageService;
+@RequestMapping("/schedule")
+public class ScheduleController {
+
+
+private ScheduleService scheduleService;
 @Autowired
-public MessageController(MessageService messageService) {
-	this.messageService = messageService;
+public ScheduleController(ScheduleService scheduleService) {
+	this.scheduleService = scheduleService;
 }
 
-//comment by vidya 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
 @GetMapping("/all")
-public Iterable<Messages> allEmployees() {
-	return messageService.getAllMessages();
+public Iterable<Schedule> getSchedules() {
+	return scheduleService.getSchedules();
 }
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
 @PostMapping("/add")
-public Messages addMessage(@RequestBody Messages message) {	
-	messageService.save(message);
-	return message;
+public Schedule addMessage(@RequestBody Schedule schedule) {
+	System.out.println("In schedule controller"+schedule);
+	scheduleService.save(schedule);
+	return schedule;
 }
-@PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
-	@GetMapping("/{messageId}")
-	public Messages employeeById(@PathVariable("messageId") long messageId) {
-
-		return messageService.findById(messageId);
-	}
-
-@PreAuthorize("hasRole('ADMIN')")
-@DeleteMapping("/{messageId}")
-public void deleteEmployee(@PathVariable("messageId") long messageId) {
-	messageService.deleteMeassageById(messageId);
+@PutMapping("/update")
+public Schedule updateScchedule(@RequestBody Schedule schedule) {
+	scheduleService.save(schedule);
+	 return schedule;
 }
+	
 }

@@ -29,5 +29,15 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 /.mvn/
+=======
+/.gitignore
+/.mvn/
+/hs_err_pid1156.log
+/hs_err_pid15516.log
+/mvnw
+/mvnw.cmd
+/pom.xml
+>>>>>>> branch 'master' of https://github.com/kailashnadh/capstone.git
 /src/

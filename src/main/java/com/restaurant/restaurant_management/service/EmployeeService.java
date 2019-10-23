@@ -13,5 +13,7 @@ public interface EmployeeService {
 	public void save(Employee theEmployee);
 	
 	public void deleteById(Long id);
+	
+	public void setRolebyId(Long emp_id,Long role_id);
 	public Employee getMangerFromEmployeeId(Long id);
 }

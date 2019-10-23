@@ -1,5 +1,6 @@
 package com.restaurant.restaurant_management.dao;
 
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,9 +27,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		// create a query
 				Query theQuery = 
 						entityManager.createQuery("from Employee");
+			
 				
 				// execute query and get result list
 				List<Employee> employees = theQuery.getResultList();
+				
+					
+				//String asB64 = Base64.getEncoder().encodeToString("some string".getBytes("utf-8"));
 				
 				// return the results		
 				return employees;
@@ -102,6 +107,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		theQuery.setParameter("empID", id);
 		Employee theEmployee =(Employee)theQuery.getSingleResult();
 		return theEmployee;
+	}
+
+	@Override
+	public void setRolebyId(Long emp_id, Long role_id) {
+		System.out.print("employeeid in setrole"+emp_id);
+		System.out.print("roleid in setrole"+role_id);
+		// TODO Auto-generated method stub
+		Query theQuery=entityManager.createNativeQuery(
+				"UPDATE employee_roles SET role_id = ? WHERE employee_roles.emp_id = ?");
+		theQuery.setParameter(1, role_id);
+		theQuery.setParameter(2, emp_id);
+		theQuery.executeUpdate();
+		System.out.println(theQuery);
 	}
 
 }
