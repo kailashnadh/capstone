@@ -7,4 +7,5 @@ import com.restaurant.restaurant_management.model.Schedule;
 public interface ScheduleDAO {
 	 public List<Schedule> getAllSchedulesForDate(Date ScheduleDay);
 		public void save(Schedule schedule);
+		public List<Schedule> getSchedules();
 }
