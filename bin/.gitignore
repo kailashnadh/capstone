@@ -29,11 +29,3 @@ build/
 
 ### VS Code ###
 .vscode/
-/.gitignore
-/.mvn/
-/hs_err_pid1156.log
-/hs_err_pid15516.log
-/mvnw
-/mvnw.cmd
-/pom.xml
-/src/
