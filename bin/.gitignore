@@ -30,6 +30,7 @@ build/
 ### VS Code ###
 .vscode/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /.mvn/
 =======
 /.gitignore
@@ -41,3 +42,5 @@ build/
 /pom.xml
 >>>>>>> branch 'master' of https://github.com/kailashnadh/capstone.git
 /src/
+=======
+>>>>>>> branch 'master' of https://github.com/kailashnadh/capstone.git
