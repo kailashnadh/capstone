@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.restaurant.restaurant_management.dto.Employeedto;
+import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 
@@ -23,6 +24,8 @@ public interface EmployeeDAO {
 	public Employee getMangerFromEmployeeId(Long id);
 	
 	public void updateEmployee(Employeedto employee);
+
+	public void updatePassword(Password newPassword);
 	
 
 }

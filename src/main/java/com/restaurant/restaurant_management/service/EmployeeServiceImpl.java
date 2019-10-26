@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.restaurant.restaurant_management.dao.EmployeeDAO;
 import com.restaurant.restaurant_management.dto.Employeedto;
+import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 
@@ -114,6 +115,14 @@ Employee theEmployee = employeeDAO.findById(id);
 	@Transactional
 	public void updateEmployee(Employeedto employee) {
 		employeeDAO.updateEmployee(employee);
+		
+	}
+
+	@Override
+	@Transactional
+	public void updatePassword(Password newPassword) {
+		// TODO Auto-generated method stub
+		employeeDAO.updatePassword(newPassword);
 		
 	}
 

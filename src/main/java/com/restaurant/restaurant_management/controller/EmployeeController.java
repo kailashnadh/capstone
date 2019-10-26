@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurant.restaurant_management.dto.Emaildto;
 import com.restaurant.restaurant_management.dto.Employeedto;
+import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.dto.setRole;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.service.EmployeeService;
@@ -77,6 +78,13 @@ private BCryptPasswordEncoder bcryptEncoder;
 	@DeleteMapping("/{messageId}")
 	public void deleteCountry(@PathVariable("messageId") long employeeId) {
 		employeeService.deleteById(employeeId);
+	}
+	
+	@PreAuthorize("hasAnyRole('USER', 'MANAGER','ADMIN')")
+	@PutMapping("/changePassword")
+	public void updatePassword(@RequestBody Password newPassword) {
+		newPassword.setPassword(bcryptEncoder.encode(newPassword.getPassword()));
+		employeeService.updatePassword(newPassword);
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")

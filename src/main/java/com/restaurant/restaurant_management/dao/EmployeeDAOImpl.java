@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.restaurant.restaurant_management.dto.Employeedto;
+import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 @Repository
@@ -142,6 +143,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		theQuery.setParameter(9, employee.getEmp_id());
 		theQuery.setParameter(10, employee.getAddress_id());
 		theQuery.executeUpdate();		
+	}
+
+	@Override
+	public void updatePassword(Password newPassword) {
+		Query theQuery=entityManager.createNativeQuery(
+				"UPDATE employee SET emp_password = ? WHERE employee.emp_id = ?");
+		theQuery.setParameter(1, newPassword.getPassword());
+		theQuery.setParameter(2, newPassword.getEmp_id());
+		theQuery.executeUpdate();
+		
 	}
 
 }
