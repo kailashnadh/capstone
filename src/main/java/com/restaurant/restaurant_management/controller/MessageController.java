@@ -22,6 +22,7 @@ public MessageController(MessageService messageService) {
 	this.messageService = messageService;
 }
 
+//comment by vidya 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
 @GetMapping("/all")
 public Iterable<Messages> allEmployees() {
