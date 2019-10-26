@@ -6,6 +6,7 @@ import com.restaurant.restaurant_management.model.Schedule;
 
 public interface ScheduleService {
 	public List<Schedule> getAllSchedulesForDate(Date ScheduleDay);
+	public List<Schedule> getAllSchedulesbetweenDates(Date periodStart,Date periodEnd);
 	public void save(Schedule schedule);
-	public List<Schedule> getSchedules();
+	public void deleteSchedule(Long schedule_id);
 }

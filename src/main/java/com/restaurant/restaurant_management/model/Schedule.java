@@ -24,53 +24,12 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Getter
+@Setter
 @ToString
 @Table(name="schedule")
 @Entity
-public class Schedule {
-	public Long getSchedule_id() {
-		return schedule_id;
-	}
-
-	public void setSchedule_id(Long schedule_id) {
-		this.schedule_id = schedule_id;
-	}
-
-	public Employee getEmp_id() {
-		return emp_id;
-	}
-
-	public void setEmp_id(Employee emp_id) {
-		this.emp_id = emp_id;
-	}
-
-	public Date getSchedule_day() {
-		return schedule_day;
-	}
-
-	public void setSchedule_day(Date schedule_day) {
-		
-		this.schedule_day = schedule_day;
-	}
-
-	public Date getSchedule_start() {
-		return schedule_start;
-	}
-
-	public void setSchedule_start(Date schedule_start) {
-		this.schedule_start = schedule_start;
-	}
-
-	public Date getSchedule_end() {
-		return schedule_end;
-	}
-
-	public void setSchedule_end(Date schedule_end) {
-		this.schedule_end = schedule_end;
-	}
-
-	@Id
+public class Schedule {@Id
 	@Column(name = "id")
 	private Long schedule_id;
 	
@@ -78,7 +37,7 @@ public class Schedule {
 	@JoinColumn(name="emp_id")
 	private Employee emp_id;
 	
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date schedule_day;
 

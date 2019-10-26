@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.restaurant.restaurant_management.dao.EmployeeDAO;
+import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 
@@ -41,6 +42,11 @@ public class EmployeeServiceImpl implements EmployeeService,UserDetailsService{
 	public List<Employee> findAll() {
 		// TODO Auto-generated method stub
 		return employeeDAO.findAll();
+	}
+	@Override
+	@Transactional
+	public Employee findByEmailId(String emailId) {
+		return employeeDAO.findByEmailId(emailId);		
 	}
 
 	@Override
@@ -101,6 +107,13 @@ Employee theEmployee = employeeDAO.findById(id);
 	@Transactional
 	public void setRolebyId(Long emp_id,Long role_id) {
 		employeeDAO.setRolebyId(emp_id,role_id);
+		
+	}
+
+	@Override
+	@Transactional
+	public void updateEmployee(Employeedto employee) {
+		employeeDAO.updateEmployee(employee);
 		
 	}
 

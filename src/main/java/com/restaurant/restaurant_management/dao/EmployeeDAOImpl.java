@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 @Repository
@@ -120,6 +121,27 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		theQuery.setParameter(2, emp_id);
 		theQuery.executeUpdate();
 		System.out.println(theQuery);
+	}
+
+	@Override
+	public void updateEmployee(Employeedto employee) {
+		
+		Query theQuery=entityManager.createNativeQuery("UPDATE employee, address\r\n" + 
+				"		SET employee.email = ?, employee.firstname = ?,employee.lastname = ?,employee.phonenumber=?,employee.photo=?,address.city=?,address.pincode=?,address.street=?\r\n" + 
+				"		WHERE employee.emp_id = ? AND address.id=?");
+		
+		
+		theQuery.setParameter(1, employee.getEmail());
+		theQuery.setParameter(2, employee.getFirstname());
+		theQuery.setParameter(3, employee.getLastname());
+		theQuery.setParameter(4, employee.getPhonenumber());
+		theQuery.setParameter(5, employee.getPhoto());
+		theQuery.setParameter(6, employee.getAddress_id().getCity());
+		theQuery.setParameter(7, employee.getAddress_id().getPincode());
+		theQuery.setParameter(8, employee.getAddress_id().getStreet());
+		theQuery.setParameter(9, employee.getEmp_id());
+		theQuery.setParameter(10, employee.getAddress_id());
+		theQuery.executeUpdate();		
 	}
 
 }

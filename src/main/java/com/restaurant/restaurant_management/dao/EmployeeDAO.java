@@ -3,6 +3,7 @@ package com.restaurant.restaurant_management.dao;
 import java.util.List;
 import java.util.Set;
 
+import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
 
@@ -20,6 +21,8 @@ public interface EmployeeDAO {
 	public Set<Roles>getRoles(Long emp_id); 
 	
 	public Employee getMangerFromEmployeeId(Long id);
+	
+	public void updateEmployee(Employeedto employee);
 	
 
 }

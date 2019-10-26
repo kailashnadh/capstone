@@ -18,28 +18,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	public ScheduleDAOImpl(EntityManager theEntityManager) {
 		entityManager = theEntityManager;
 	}
-	
-	@Override
-	public List<Schedule> getSchedules() {
-		// create a query
-				Query theQuery = 
-						entityManager.createQuery("from Schedule");
-			
-				
-				// execute query and get result list
-				List<Schedule> schedule = theQuery.getResultList();
-				
-					
-				//String asB64 = Base64.getEncoder().encodeToString("some string".getBytes("utf-8"));
-				
-				// return the results		
-				return schedule;
-	}
 
 	@Override
 	public List<Schedule> getAllSchedulesForDate(Date ScheduleDay) {
 		Query theQuery = 
-				entityManager.createQuery("from Schedule where schedule_id=:date");
+				entityManager.createQuery("from Schedule where schedule_day=:date");
 		theQuery.setParameter("date", ScheduleDay);
 		List<Schedule> schedules = theQuery.getResultList();	
 		return schedules;
@@ -47,9 +30,31 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 
 	@Override
 	public void save(Schedule schedule) {
-		System.out.println("In schedule daoimplement"+schedule);
 		Schedule dbSchedule = entityManager.merge(schedule);
 		schedule.setSchedule_id(dbSchedule.getSchedule_id()); 
+	}
+
+	@Override
+	public List<Schedule> getAllSchedulesbetweenDates(Date periodStart, Date periodEnd) {
+		Query theQuery = 
+				entityManager.createQuery("from Schedule where schedule_day between :date1 and :date2");
+		theQuery.setParameter("date1", periodStart);
+		theQuery.setParameter("date2", periodEnd);
+		List<Schedule> schedules = theQuery.getResultList();	
+		return schedules;
+	}
+
+	
+
+	@Override
+	public void deleteSchedule(Long schedule_id) {
+		// TODO Auto-generated method stub
+		Query theQuery = entityManager.createQuery(
+				"delete from Schedule where id=:schedule_id");
+
+theQuery.setParameter("schedule_id", schedule_id);
+
+theQuery.executeUpdate();
 	}
 
 }

@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.restaurant.restaurant_management.dto.Emaildto;
+import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.setRole;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.service.EmployeeService;
@@ -53,6 +56,12 @@ private BCryptPasswordEncoder bcryptEncoder;
 		return employeeService.findById(employeeId);
 	}
     
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER','ADMIN')")
+	@GetMapping("/getbyemail/{employeeName}")
+	public Employee findByEmailId(@PathVariable("employeeName") String employeeEmail) {
+
+		return employeeService.findByEmailId(employeeEmail);
+	}
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
  	@GetMapping("/manager/{employeeId}")
  	public Employee getManagerbyEmployeeId(@PathVariable("employeeId") long employeeId) {
@@ -60,11 +69,8 @@ private BCryptPasswordEncoder bcryptEncoder;
  		return employeeService.getMangerFromEmployeeId(employeeId);
  	}
 	@PutMapping("/update")
-	public Employee updateEmployee(@RequestBody Employee employee) {
-		if(!employee.getPassword().isEmpty()) {
-			employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
-		}
-		 employeeService.save(employee);
+	public Employeedto updateEmployee(@RequestBody Employeedto employee) {
+		 employeeService.updateEmployee(employee);
 		 return employee;
 	}
 	@PreAuthorize("hasRole('ADMIN')")

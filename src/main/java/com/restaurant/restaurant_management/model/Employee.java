@@ -149,24 +149,5 @@ public class Employee {
 		this.roles = roles;
 	}
 	
-	 public Employeedto _toConvertStudentDTO(){
-		 Employeedto dto = new Employeedto();
-		 	dto.setEmp_id(emp_id);
-		 	dto.setFirstname(firstname);
-		 	dto.setLastname(lastname);
-		 	dto.setEmail(email);
-		 	dto.setPassword(password);
-		 	dto.setGender(gender);
-		 	dto.setDate(date);
-		 	dto.setPhonenumber(phonenumber);
-		 	dto.setPhoto(Base64.getEncoder().encodeToString(photo));
-		 	dto.setAddress_id(address_id);
-		 	dto.setManager(manager);
-		 	dto.setRoles(roles);
-		 	
-		    //set dto values here from StudentEntity
-		    return dto;
-		 }
-	
 
 }
