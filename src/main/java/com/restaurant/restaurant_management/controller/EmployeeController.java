@@ -1,4 +1,5 @@
 package com.restaurant.restaurant_management.controller;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.restaurant.restaurant_management.dto.Emaildto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restaurant.restaurant_management.dto.EmpImage;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.dto.setRole;
@@ -69,11 +72,32 @@ private BCryptPasswordEncoder bcryptEncoder;
 
  		return employeeService.getMangerFromEmployeeId(employeeId);
  	}
+    @PreAuthorize("hasAnyRole('USER','MANAGER', 'ADMIN')")
 	@PutMapping("/update")
-	public Employeedto updateEmployee(@RequestBody Employeedto employee) {
-		 employeeService.updateEmployee(employee);
-		 return employee;
+	public Employeedto updateEmployee(@RequestParam(value = "myFile",required = false) MultipartFile file,
+            @RequestParam(value="employee",required = false)String employee) throws IOException{
+    	System.out.println("in update controller"+employee);
+    	EmpImage jsonAd = new ObjectMapper().readValue(employee, EmpImage.class);
+    	Employeedto empDto=new Employeedto(jsonAd.getEmp_id(),
+    										jsonAd.getFirstname(),
+    										jsonAd.getLastname(),
+    										jsonAd.getGender(),
+    										jsonAd.getDate(),
+    										jsonAd.getEmail(),
+    										jsonAd.getPhonenumber(),
+    										file.getBytes(),
+    										jsonAd.getAddress_id());
+//    	jsonAd.setPhoto(file.getBytes());
+		 employeeService.updateEmployee(empDto);
+		 return empDto;
 	}
+    
+//    @PutMapping("/upload")
+//	public Employeedto uploadImage(@RequestParam("myFile") MultipartFile file) throws IOException {
+//    	System.out.println("in update controller"+employee);
+//		 employeeService.updateEmployee(employee);
+//		 return employee;
+//	}
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{messageId}")
 	public void deleteCountry(@PathVariable("messageId") long employeeId) {
