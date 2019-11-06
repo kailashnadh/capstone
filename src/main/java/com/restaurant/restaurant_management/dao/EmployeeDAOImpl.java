@@ -149,7 +149,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public void updatePassword(Password newPassword) {
 		Query theQuery=entityManager.createNativeQuery(
 				"UPDATE employee SET emp_password = ? WHERE employee.emp_id = ?");
-		theQuery.setParameter(1, newPassword.getPassword());
+		theQuery.setParameter(1, newPassword.getNewPassword());
 		theQuery.setParameter(2, newPassword.getEmp_id());
 		theQuery.executeUpdate();
 		

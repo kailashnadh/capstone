@@ -106,9 +106,19 @@ private BCryptPasswordEncoder bcryptEncoder;
 	
 	@PreAuthorize("hasAnyRole('USER', 'MANAGER','ADMIN')")
 	@PutMapping("/changePassword")
-	public void updatePassword(@RequestBody Password newPassword) {
-		newPassword.setPassword(bcryptEncoder.encode(newPassword.getPassword()));
-		employeeService.updatePassword(newPassword);
+	public boolean updatePassword(@RequestBody Password newPassword) {
+		Employee currentEmployee=employeeService.findById(newPassword.getEmp_id());
+		boolean result = bcryptEncoder.matches(newPassword.getCurrentPassword(), currentEmployee.getPassword());
+		if(result) {
+			newPassword.setNewPassword(bcryptEncoder.encode(newPassword.getNewPassword()));
+			employeeService.updatePassword(newPassword);
+			return result;
+		}
+		
+		else {
+			return false;
+		}
+		
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
