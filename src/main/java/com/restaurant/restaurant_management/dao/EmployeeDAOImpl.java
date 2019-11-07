@@ -126,23 +126,44 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void updateEmployee(Employeedto employee) {
+		if(employee.getPhoto()!=null) {
+			Query theQuery=entityManager.createNativeQuery("UPDATE employee, address\r\n" + 
+					"		SET employee.email = ?, employee.firstname = ?,employee.lastname = ?,employee.phonenumber=?,employee.photo=?,address.city=?,address.pincode=?,address.street=?\r\n" + 
+					"		WHERE employee.emp_id = ? AND address.id=?");
+			
+			
+			theQuery.setParameter(1, employee.getEmail());
+			theQuery.setParameter(2, employee.getFirstname());
+			theQuery.setParameter(3, employee.getLastname());
+			theQuery.setParameter(4, employee.getPhonenumber());
+			theQuery.setParameter(5, employee.getPhoto());
+			theQuery.setParameter(6, employee.getAddress_id().getCity());
+			theQuery.setParameter(7, employee.getAddress_id().getPincode());
+			theQuery.setParameter(8, employee.getAddress_id().getStreet());
+			theQuery.setParameter(9, employee.getEmp_id());
+			theQuery.setParameter(10, employee.getAddress_id());
+			theQuery.executeUpdate();	
+		}
 		
-		Query theQuery=entityManager.createNativeQuery("UPDATE employee, address\r\n" + 
-				"		SET employee.email = ?, employee.firstname = ?,employee.lastname = ?,employee.phonenumber=?,employee.photo=?,address.city=?,address.pincode=?,address.street=?\r\n" + 
-				"		WHERE employee.emp_id = ? AND address.id=?");
+		else {
+			Query theQuery=entityManager.createNativeQuery("UPDATE employee, address\r\n" + 
+					"		SET employee.email = ?, employee.firstname = ?,employee.lastname = ?,employee.phonenumber=?,address.city=?,address.pincode=?,address.street=?\r\n" + 
+					"		WHERE employee.emp_id = ? AND address.id=?");
+			
+			
+			theQuery.setParameter(1, employee.getEmail());
+			theQuery.setParameter(2, employee.getFirstname());
+			theQuery.setParameter(3, employee.getLastname());
+			theQuery.setParameter(4, employee.getPhonenumber());
+			theQuery.setParameter(5, employee.getAddress_id().getCity());
+			theQuery.setParameter(6, employee.getAddress_id().getPincode());
+			theQuery.setParameter(7, employee.getAddress_id().getStreet());
+			theQuery.setParameter(8, employee.getEmp_id());
+			theQuery.setParameter(9, employee.getAddress_id());
+			theQuery.executeUpdate();
+		}
 		
-		
-		theQuery.setParameter(1, employee.getEmail());
-		theQuery.setParameter(2, employee.getFirstname());
-		theQuery.setParameter(3, employee.getLastname());
-		theQuery.setParameter(4, employee.getPhonenumber());
-		theQuery.setParameter(5, employee.getPhoto());
-		theQuery.setParameter(6, employee.getAddress_id().getCity());
-		theQuery.setParameter(7, employee.getAddress_id().getPincode());
-		theQuery.setParameter(8, employee.getAddress_id().getStreet());
-		theQuery.setParameter(9, employee.getEmp_id());
-		theQuery.setParameter(10, employee.getAddress_id());
-		theQuery.executeUpdate();		
+			
 	}
 
 	@Override

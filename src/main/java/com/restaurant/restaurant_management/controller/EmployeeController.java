@@ -76,20 +76,39 @@ private BCryptPasswordEncoder bcryptEncoder;
 	@PutMapping("/update")
 	public Employeedto updateEmployee(@RequestParam(value = "myFile",required = false) MultipartFile file,
             @RequestParam(value="employee",required = false)String employee) throws IOException{
-    	System.out.println("in update controller"+employee);
-    	EmpImage jsonAd = new ObjectMapper().readValue(employee, EmpImage.class);
-    	Employeedto empDto=new Employeedto(jsonAd.getEmp_id(),
-    										jsonAd.getFirstname(),
-    										jsonAd.getLastname(),
-    										jsonAd.getGender(),
-    										jsonAd.getDate(),
-    										jsonAd.getEmail(),
-    										jsonAd.getPhonenumber(),
-    										file.getBytes(),
-    										jsonAd.getAddress_id());
-//    	jsonAd.setPhoto(file.getBytes());
-		 employeeService.updateEmployee(empDto);
-		 return empDto;
+    	try {
+    		System.out.println("in update controller"+employee);
+        	EmpImage jsonAd = new ObjectMapper().readValue(employee, EmpImage.class);
+        	Employeedto empDto=new Employeedto(jsonAd.getEmp_id(),
+        										jsonAd.getFirstname(),
+        										jsonAd.getLastname(),
+        										jsonAd.getGender(),
+        										jsonAd.getDate(),
+        										jsonAd.getEmail(),
+        										jsonAd.getPhonenumber(),
+        										file.getBytes(),
+        										jsonAd.getAddress_id());
+//        	jsonAd.setPhoto(file.getBytes());
+    		 employeeService.updateEmployee(empDto);
+    		 return empDto;
+    	}
+    	catch(Exception e) {
+    		EmpImage jsonAd = new ObjectMapper().readValue(employee, EmpImage.class);
+        	Employeedto empDto=new Employeedto();
+        	empDto.setEmp_id(jsonAd.getEmp_id());
+        	empDto.setFirstname(jsonAd.getFirstname());
+        	empDto.setLastname(jsonAd.getLastname());
+        	empDto.setGender(jsonAd.getGender());
+        	empDto.setDate(jsonAd.getDate());
+        	empDto.setEmail(jsonAd.getEmail());
+        	empDto.setPhonenumber(jsonAd.getPhonenumber());
+        	empDto.setAddress_id(jsonAd.getAddress_id());
+        	employeeService.updateEmployee(empDto);
+        	return empDto;
+    		
+    	}
+    	
+    	
 	}
     
 //    @PutMapping("/upload")
