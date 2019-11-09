@@ -33,7 +33,7 @@ private long emp_id;
 
 	private String email;
 	
-	private int phonenumber;
+	private long phonenumber;
 	
 	private byte[] photo;
 	

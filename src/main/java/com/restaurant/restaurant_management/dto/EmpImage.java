@@ -29,7 +29,7 @@ private long emp_id;
 	private String email;
 	private String roles;
 	
-	private int phonenumber;
+	private long phonenumber;
 	
 	private Address address_id;
 }

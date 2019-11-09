@@ -57,7 +57,7 @@ public class Employee {
 	@NotNull
 	private String email;
 	@NotNull
-	private int phonenumber;
+	private long phonenumber;
 	//added lob
 	@Lob
 	private byte[] photo;
@@ -124,10 +124,10 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getPhonenumber() {
+	public long getPhonenumber() {
 		return phonenumber;
 	}
-	public void setPhonenumber(int phonenumber) {
+	public void setPhonenumber(long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 	public byte[] getPhoto() {
