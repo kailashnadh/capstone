@@ -20,4 +20,5 @@ public interface EmployeeService {
 	public void setRolebyId(Long emp_id,Long role_id);
 	public Employee getMangerFromEmployeeId(Long id);
 	public void updatePassword(Password newPassword);
+	public boolean isEmployeeExists(String email);
 }

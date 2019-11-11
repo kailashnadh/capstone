@@ -26,6 +26,6 @@ public interface EmployeeDAO {
 	public void updateEmployee(Employeedto employee);
 
 	public void updatePassword(Password newPassword);
-	
+	public boolean isEmployeeExists(String email);
 
 }

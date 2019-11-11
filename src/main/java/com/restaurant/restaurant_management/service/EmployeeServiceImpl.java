@@ -125,6 +125,11 @@ Employee theEmployee = employeeDAO.findById(id);
 		employeeDAO.updatePassword(newPassword);
 		
 	}
+	@Override
+	public boolean isEmployeeExists(String email) {
+		// TODO Auto-generated method stub
+		return employeeDAO.isEmployeeExists(email);
+	}
 
 	
 	

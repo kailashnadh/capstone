@@ -176,4 +176,22 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 	}
 
+	@Override
+	public boolean isEmployeeExists(String email) {
+		// TODO Auto-generated method stub
+		Query theQuery = entityManager.createQuery(
+				"select count(*) from Employee e where email=:emailId");
+		theQuery.setParameter("emailId", email);
+		System.out.println("email is "+email);
+		Long count= (Long)theQuery.getSingleResult();
+		
+		if(count!= null &&count.intValue()!=0) {
+			return true;
+		}else {
+			return false;
+		}
+		
+		//Employee theEmployee =(Employee)
+		
+	}
 }

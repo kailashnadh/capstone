@@ -22,6 +22,7 @@ import com.restaurant.restaurant_management.dto.EmpImage;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.dto.setRole;
+import com.restaurant.restaurant_management.mail.SMTPMail;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.service.EmployeeService;
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,6 +32,8 @@ public class EmployeeController {
 private EmployeeService employeeService;
 @Autowired
 private BCryptPasswordEncoder bcryptEncoder;
+@Autowired
+private SMTPMail mail;
 	@Autowired
 	public EmployeeController(EmployeeService theEmployeeService) {
 		employeeService = theEmployeeService;
@@ -38,9 +41,21 @@ private BCryptPasswordEncoder bcryptEncoder;
 //Added by Surendher
 	@PostMapping("/add")
 	public Employee addEmployee(@RequestBody Employee employee) {	
-		employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
-		employeeService.save(employee);
-		return employee;
+		if(!employeeService.isEmployeeExists(employee.getEmail())) {
+			employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+			employeeService.save(employee);
+			try {
+				mail.sendEmail(employee.getEmail(), employee.getFirstname(),employee.getLastname());
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+			return employee;
+		}
+		else
+		{
+			return employee;
+		}
+		
 	}
 
 	//@Secured({"ROLE_ADMIN", "ROLE_USER"})
