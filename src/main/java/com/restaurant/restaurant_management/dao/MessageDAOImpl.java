@@ -1,4 +1,6 @@
 package com.restaurant.restaurant_management.dao;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -6,6 +8,9 @@ import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.restaurant.restaurant_management.dto.Messagesdto;
+import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Messages;
 
 @Repository
@@ -15,15 +20,20 @@ public class MessageDAOImpl implements MessageDAO {
 	public MessageDAOImpl(EntityManager theEntityManager) {
 		entityManager = theEntityManager;
 	}
-	@Override
-	public List<Messages> getAllMessages() {
-		Query theQuery = 
-				entityManager.createQuery("from Messages");
-		
-		// execute query and get result list
-		List<Messages> messages = theQuery.getResultList();
-	//	 messages.forEach(message -> message.setEmployeeName(message.getEmployee().getFirstname()));
-		// return the results		
+	
+	public List<Messagesdto> getMessages() {
+		Query theQuery =entityManager.createNativeQuery("SELECT m.id,m.message_text,m.message_time, CONCAT(e.firstname,' ',e.lastname) as employee_name FROM messages m join employee e on m.employee_id=e.emp_id");
+		List<Messagesdto> messages = new ArrayList();	
+		for (Object o : theQuery.getResultList()) {
+		    Object[] cols = (Object[]) o;
+		    Messagesdto tmpG = new Messagesdto();
+		    tmpG.setMessage_id(((BigInteger) cols[0]).longValue());
+		    tmpG.setMessage_text(cols[1].toString());
+		    tmpG.setMessage_time(cols[2].toString());
+		    tmpG.setEmployee_name(cols[3].toString());
+		    messages.add(tmpG);
+		}
+		System.out.println("in Messages DAO"+messages.get(0).getEmployee_name());
 		return messages;
 	}
 

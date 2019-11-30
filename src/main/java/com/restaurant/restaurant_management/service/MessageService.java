@@ -1,6 +1,7 @@
 package com.restaurant.restaurant_management.service;
 import java.util.List;
 
+import com.restaurant.restaurant_management.dto.Messagesdto;
 import com.restaurant.restaurant_management.model.Messages;
 
 public interface MessageService {
@@ -9,7 +10,7 @@ public interface MessageService {
 		//get messagebyId
 		//update message
 		//delete message
-	public List<Messages> getAllMessages();
+	public List<Messagesdto> getAllMessages();
 		
 		public Messages findById(Long id);
 		

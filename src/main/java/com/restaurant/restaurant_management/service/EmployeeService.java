@@ -8,6 +8,7 @@ import com.restaurant.restaurant_management.model.Employee;
 
 public interface EmployeeService {
 	public List<Employee> findAll();
+	public List<Employee> allManagers();
 	public Employee findByEmailId(String emailId);
 	
 	public Employee findById(Long id);

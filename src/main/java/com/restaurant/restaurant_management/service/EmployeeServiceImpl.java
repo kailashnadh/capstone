@@ -44,6 +44,13 @@ public class EmployeeServiceImpl implements EmployeeService,UserDetailsService{
 		// TODO Auto-generated method stub
 		return employeeDAO.findAll();
 	}
+	
+	@Override
+	@Transactional
+	public List<Employee> allManagers() {
+		// TODO Auto-generated method stub
+		return employeeDAO.allManagers();
+	}
 	@Override
 	@Transactional
 	public Employee findByEmailId(String emailId) {

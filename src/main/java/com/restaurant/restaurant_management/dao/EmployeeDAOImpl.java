@@ -40,6 +40,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				// return the results		
 				return employees;
 	}
+	
+	@Override
+	public List<Employee> allManagers() {
+		Query theQuery =entityManager.createNativeQuery("SELECT * FROM employee join employee_roles on employee.emp_id =employee_roles.emp_id where "
+				+ "employee_roles.role_id=2");
+		List<Employee> managers = theQuery.getResultList();	
+		return managers;
+	}
 
 	@Override
 	public Employee findById(Long id) {
@@ -101,6 +109,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			}	
 		return roles;
 	}
+	
+	
 	
 	@Override
 	public Employee getMangerFromEmployeeId(Long id) {

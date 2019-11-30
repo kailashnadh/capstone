@@ -33,14 +33,10 @@ public class Messages {
 	@Column(name = "id")
 	private long message_id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="emp_id")
-	private Employee employee;
+	private long employee_id;
 	
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "message_time")
-	private Date message_time;
-	@Column
+	private String message_time;
+	
+	@Column(length = 2055)
 	private String message_text;
 }

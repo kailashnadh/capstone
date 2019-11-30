@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.restaurant.restaurant_management.dao.MessageDAO;
+import com.restaurant.restaurant_management.dto.Messagesdto;
 import com.restaurant.restaurant_management.model.Messages;
 
 @Service
@@ -17,9 +18,9 @@ public MessageServiceImpl(MessageDAO theMessageDAO) {
 	messageDAO = theMessageDAO;
 }
 	@Override
-	public List<Messages> getAllMessages() {
+	public List<Messagesdto> getAllMessages() {
 		// TODO Auto-generated method stub
-		return messageDAO.getAllMessages();
+		return messageDAO.getMessages();
 	}
 
 	@Override

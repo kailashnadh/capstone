@@ -58,36 +58,44 @@ private SMTPMail mail;
 		
 	}
 
-	//@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	//@Secured({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/all")
 	public Iterable<Employee> allEmployees() {
     	List<Employee> e=employeeService.findAll();
     	return e;
 	}
+    
+    @PreAuthorize("hasRole('ADMIN')")
+   	@GetMapping("/allManagers")
+   	public Iterable<Employee> allManagers() {
+       	List<Employee> e=employeeService.allManagers();
+       	return e;
+   	}
 
-    //@Secured("ROLE_USER")
-    //@PreAuthorize("hasRole('USER')")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    //@Secured("ROLE_EMPLOYEE")
+    //@PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE','MANAGER', 'ADMIN')")
 	@GetMapping("/{employeeId}")
 	public Employee employeeById(@PathVariable("employeeId") long employeeId) {
 
 		return employeeService.findById(employeeId);
 	}
     
-    @PreAuthorize("hasAnyRole('USER', 'MANAGER','ADMIN')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER','ADMIN')")
 	@GetMapping("/getbyemail/{employeeName}")
 	public Employee findByEmailId(@PathVariable("employeeName") String employeeEmail) {
+    	System.out.println("in find by email employee controller");
 
 		return employeeService.findByEmailId(employeeEmail);
 	}
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE','MANAGER', 'ADMIN')")
  	@GetMapping("/manager/{employeeId}")
  	public Employee getManagerbyEmployeeId(@PathVariable("employeeId") long employeeId) {
 
  		return employeeService.getMangerFromEmployeeId(employeeId);
  	}
-    @PreAuthorize("hasAnyRole('USER','MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE','MANAGER', 'ADMIN')")
 	@PutMapping("/update")
 	public Employeedto updateEmployee(@RequestParam(value = "myFile",required = false) MultipartFile file,
             @RequestParam(value="employee",required = false)String employee) throws IOException{
@@ -138,7 +146,7 @@ private SMTPMail mail;
 		employeeService.deleteById(employeeId);
 	}
 	
-	@PreAuthorize("hasAnyRole('USER', 'MANAGER','ADMIN')")
+	@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER','ADMIN')")
 	@PutMapping("/changePassword")
 	public boolean updatePassword(@RequestBody Password newPassword) {
 		Employee currentEmployee=employeeService.findById(newPassword.getEmp_id());
