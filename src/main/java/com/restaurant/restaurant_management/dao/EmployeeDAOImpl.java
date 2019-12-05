@@ -1,5 +1,7 @@
 package com.restaurant.restaurant_management.dao;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
@@ -11,10 +13,12 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.restaurant.restaurant_management.dto.AllEmployeeList;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Roles;
+import com.restaurant.restaurant_management.model.Schedule;
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
 	private EntityManager entityManager;
@@ -203,5 +207,26 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		//Employee theEmployee =(Employee)
 		
+	}
+
+	@Override
+	public List<AllEmployeeList> findAllEmployees() {
+		// create a query
+		Query theQuery =entityManager.createNativeQuery("SELECT e.emp_id,e.firstname,e.lastname FROM employee e join employee_roles r on e.emp_id =r.emp_id where "
+				+ "r.role_id=3");
+			
+				
+				// execute query and get result list
+		List<Object> employeesObj = theQuery.getResultList();
+		List<AllEmployeeList> employees = new ArrayList();	
+		for(Object o :employeesObj) {
+			 Object[] cols = (Object[]) o;
+			 AllEmployeeList tmpG = new AllEmployeeList();
+			    tmpG.setEmp_id(Long.parseLong(cols[0].toString()));
+			    tmpG.setFirstname(cols[1].toString());
+			    tmpG.setLastname(cols[2].toString());
+			    employees.add(tmpG);
+		}
+				return employees;
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.restaurant.restaurant_management.dao.ScheduleDAO;
+import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.model.Schedule;
 
 @Service
@@ -28,6 +29,13 @@ public ScheduleServiceImpl(ScheduleDAO theScheduleDAO) {
 		// TODO Auto-generated method stub
 	scheduleDAO.save(schedule);
 
+	}
+	
+	@Override
+	@Transactional
+	public List<Schedule> getSchedulebyEmployee(long emp_id) {
+		System.out.println("In schedule getSchedulkeby Emp Service"+emp_id);
+		return scheduleDAO.getSchedulebyEmployee(emp_id);		
 	}
 	@Override
 	public List<Schedule> getAllSchedulesbetweenDates(Date periodStart, Date periodEnd) {

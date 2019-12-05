@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.restaurant.restaurant_management.dao.EmployeeDAO;
+import com.restaurant.restaurant_management.dto.AllEmployeeList;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.model.Employee;
@@ -138,6 +139,15 @@ Employee theEmployee = employeeDAO.findById(id);
 		return employeeDAO.isEmployeeExists(email);
 	}
 
+	@Override
+	@Transactional
+	public List<AllEmployeeList> findAllEmployees() {
+		// TODO Auto-generated method stub
+		return employeeDAO.findAllEmployees();
+	}
+
+	
+	
 	
 	
 	

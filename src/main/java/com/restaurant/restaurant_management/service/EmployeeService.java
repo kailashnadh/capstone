@@ -2,6 +2,7 @@ package com.restaurant.restaurant_management.service;
 
 import java.util.List;
 
+import com.restaurant.restaurant_management.dto.AllEmployeeList;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.model.Employee;
@@ -22,4 +23,5 @@ public interface EmployeeService {
 	public Employee getMangerFromEmployeeId(Long id);
 	public void updatePassword(Password newPassword);
 	public boolean isEmployeeExists(String email);
+	public List<AllEmployeeList> findAllEmployees();
 }

@@ -9,4 +9,5 @@ public interface ScheduleDAO {
 	 public List<Schedule> getAllSchedulesbetweenDates(Date periodStart,Date periodEnd);
 		public void save(Schedule schedule);
 		public void deleteSchedule(Long schedule_id);
+		public List<Schedule> getSchedulebyEmployee(long emp_id);
 }

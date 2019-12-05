@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restaurant.restaurant_management.dto.AllEmployeeList;
 import com.restaurant.restaurant_management.dto.EmpImage;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
@@ -66,6 +67,12 @@ private SMTPMail mail;
     	return e;
 	}
     
+    @PreAuthorize("hasAnyRole('EMPLOYEE','MANAGER')")
+	@GetMapping("/allEmployees")
+	public Iterable<AllEmployeeList> allNormalEmployees() {
+    	List<AllEmployeeList> e=employeeService.findAllEmployees();
+    	return e;
+	}
     @PreAuthorize("hasRole('ADMIN')")
    	@GetMapping("/allManagers")
    	public Iterable<Employee> allManagers() {

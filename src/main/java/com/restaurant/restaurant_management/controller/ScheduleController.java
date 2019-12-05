@@ -33,12 +33,21 @@ public class ScheduleController {
 	public ScheduleController(ScheduleService scheduleService) {
 		this.scheduleService = scheduleService;
 	}
-	@Transactional
+	 @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
 	@PostMapping("/add")
 	public Schedule addSchedule(@RequestBody Schedule schedule) {
 		scheduleService.save(schedule);
 		return schedule;
 	}
+	
+	 @PreAuthorize("hasAnyRole('EMPLOYEE','MANAGER', 'ADMIN')")
+	 @GetMapping("/getSchedulebyEmployee/{employeeId}")
+		public Iterable<Schedule> getSchedulebyEmployee(@PathVariable("employeeId") long employeeId) {
+		 System.out.println("In schedule getSchedulkeby Emp");
+	    	List<Schedule> e=scheduleService.getSchedulebyEmployee(employeeId);
+	    	System.out.println("In schedule getSchedulkeby Emp");
+	    	return e;
+		}
 	@GetMapping("/getSchedule/{ScheduleDay}")
 	public List<Schedule> schedulesForDate(@PathVariable("ScheduleDay") String ScheduleDay){
 		Date date1=null;
