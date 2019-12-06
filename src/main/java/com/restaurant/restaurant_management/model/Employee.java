@@ -69,17 +69,10 @@ public class Employee {
             @JoinColumn(name = "emp_id") }, inverseJoinColumns = {
             @JoinColumn(name = "role_id") })
     private Set<Roles> roles;
-	@ManyToOne(cascade={CascadeType.ALL})
-	 @JsonBackReference
-	@JoinColumn(name="manager_id")
-	private Employee manager;
+	
+	private long managerid;
 
-	public Employee getManager() {
-		return manager;
-	}
-	public void setManager(Employee manager) {
-		this.manager = manager;
-	}
+	
 	
 	public long getEmp_id() {
 		return emp_id;
@@ -147,6 +140,12 @@ public class Employee {
 	}
 	public void setRoles(Set<Roles> roles) {
 		this.roles = roles;
+	}
+	public long getManagerid() {
+		return managerid;
+	}
+	public void setManagerid(long managerid) {
+		this.managerid = managerid;
 	}
 	
 

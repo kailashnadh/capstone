@@ -23,7 +23,6 @@ import com.restaurant.restaurant_management.dto.EmpImage;
 import com.restaurant.restaurant_management.dto.Employeedto;
 import com.restaurant.restaurant_management.dto.Password;
 import com.restaurant.restaurant_management.dto.setRole;
-import com.restaurant.restaurant_management.mail.SMTPMail;
 import com.restaurant.restaurant_management.model.Employee;
 import com.restaurant.restaurant_management.service.EmployeeService;
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,23 +32,16 @@ public class EmployeeController {
 private EmployeeService employeeService;
 @Autowired
 private BCryptPasswordEncoder bcryptEncoder;
-@Autowired
-private SMTPMail mail;
+
 	@Autowired
 	public EmployeeController(EmployeeService theEmployeeService) {
 		employeeService = theEmployeeService;
 	}
-//Added by Surendher
 	@PostMapping("/add")
 	public Employee addEmployee(@RequestBody Employee employee) {	
 		if(!employeeService.isEmployeeExists(employee.getEmail())) {
 			employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
 			employeeService.save(employee);
-			try {
-				mail.sendEmail(employee.getEmail(), employee.getFirstname(),employee.getLastname());
-			}catch(Exception e) {
-				System.out.println(e.getMessage());
-			}
 			return employee;
 		}
 		else
@@ -75,8 +67,8 @@ private SMTPMail mail;
 	}
     @PreAuthorize("hasRole('ADMIN')")
    	@GetMapping("/allManagers")
-   	public Iterable<Employee> allManagers() {
-       	List<Employee> e=employeeService.allManagers();
+   	public Iterable<AllEmployeeList> allManagers() {
+       	List<AllEmployeeList> e=employeeService.allManagers();
        	return e;
    	}
 

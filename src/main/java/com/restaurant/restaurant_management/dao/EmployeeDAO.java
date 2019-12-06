@@ -12,7 +12,7 @@ import com.restaurant.restaurant_management.model.Roles;
 public interface EmployeeDAO {
 	//code by surendher
 	public List<Employee> findAll();
-	public List<Employee> allManagers();
+	public List<AllEmployeeList> allManagers();
 	
 	public Employee findById(Long id);
 	public Employee findByEmailId(String emailId);

@@ -32,7 +32,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<Employee> findAll() {
 		// create a query
 				Query theQuery = 
-						entityManager.createQuery("from Employee");
+						entityManager.createQuery("from Employee where email!='admin@gmail.com'");
 			
 				
 				// execute query and get result list
@@ -46,11 +46,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override
-	public List<Employee> allManagers() {
-		Query theQuery =entityManager.createNativeQuery("SELECT * FROM employee join employee_roles on employee.emp_id =employee_roles.emp_id where "
-				+ "employee_roles.role_id=2");
-		List<Employee> managers = theQuery.getResultList();	
-		return managers;
+	public List<AllEmployeeList> allManagers() {
+		Query theQuery =entityManager.createNativeQuery("SELECT e.emp_id,e.firstname,e.lastname FROM employee e join employee_roles r on e.emp_id =r.emp_id where r.role_id=2");
+		List<Object> employeesObj = theQuery.getResultList();
+		List<AllEmployeeList> employees = new ArrayList();	
+		for(Object o :employeesObj) {
+			 Object[] cols = (Object[]) o;
+			 AllEmployeeList tmpG = new AllEmployeeList();
+			    tmpG.setEmp_id(Long.parseLong(cols[0].toString()));
+			    tmpG.setFirstname(cols[1].toString());
+			    tmpG.setLastname(cols[2].toString());
+			    employees.add(tmpG);
+		}
+		//List<Employee> managers = theQuery.getResultList();	
+		return employees;
 	}
 
 	@Override
@@ -118,11 +127,22 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	@Override
 	public Employee getMangerFromEmployeeId(Long id) {
-		Query theQuery = entityManager.createQuery(
-				"select m from Employee e join e.manager m where  e.emp_id=:empID");
+		Query theQuery = entityManager.createNativeQuery(
+				"select e.* from employee e join employee m on e.managerid=m.emp_id where e.emp_id=:empID");
 		theQuery.setParameter("empID", id);
-		Employee theEmployee =(Employee)theQuery.getSingleResult();
-		return theEmployee;
+		Object theEmployee =theQuery.getSingleResult();
+		 Object[] cols = (Object[]) theEmployee;
+		Employee e=new Employee();
+		e.setEmp_id(Long.parseLong(cols[0].toString()));
+		//e.setDate(cols[1].toString());
+		e.setEmail(cols[2].toString());
+		e.setFirstname(cols[3].toString());
+		//e.setGender(cols[4].toString());
+		e.setLastname(cols[5].toString());
+		//e.setManagerid(managerid);
+		e.setPhonenumber(Long.parseLong(cols[8].toString()));
+		
+		return e;
 	}
 
 	@Override

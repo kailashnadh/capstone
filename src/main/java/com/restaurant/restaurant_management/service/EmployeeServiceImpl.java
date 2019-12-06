@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService,UserDetailsService{
 	
 	@Override
 	@Transactional
-	public List<Employee> allManagers() {
+	public List<AllEmployeeList> allManagers() {
 		// TODO Auto-generated method stub
 		return employeeDAO.allManagers();
 	}
